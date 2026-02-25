@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import type { Request, Response } from 'express'
 import { requireAuth } from '../middleware/auth.js'
-import { generateTopic } from '../services/anthropic.js'
+import { generateTopic } from '../services/gemini.js'
 import type { AuthenticatedRequest, GenerateTopicRequest } from '../types/index.js'
 
 export const topicsRouter = Router()

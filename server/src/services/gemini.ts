@@ -1,8 +1,8 @@
-import Anthropic from '@anthropic-ai/sdk'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { config } from '../config/environment.js'
 import type { Topic, TopicCategory } from '../types/index.js'
 
-const client = new Anthropic({ apiKey: config.anthropicApiKey })
+const genAI = new GoogleGenerativeAI(config.geminiApiKey)
 
 const SYSTEM_PROMPT = `Sos un asistente creativo que genera temas de escritura para una mujer de 91 años de Corrientes, Argentina. Ella es maestra jubilada, viajó por todo el mundo, le encanta el baile, las artesanías y tiene opiniones fuertes sobre política, economía y la vida.
 
@@ -33,19 +33,6 @@ INSTRUCCIONES:
 - El tono debe ser cálido, respetuoso y estimulante
 - Las palabras clave deben ser concretas y evocadoras, entre 4 y 6
 - Generá exactamente 3 preguntas guía
-- Respondé ÚNICAMENTE con un objeto JSON válido, sin texto adicional
-
-FORMATO DE RESPUESTA (JSON exacto):
-{
-  "topic": "Título del tema",
-  "keywords": ["palabra1", "palabra2", "palabra3", "palabra4"],
-  "questions": [
-    "¿Primera pregunta?",
-    "¿Segunda pregunta?",
-    "¿Tercera pregunta?"
-  ],
-  "category": "categoria"
-}
 
 Las categorías válidas son: "educacion", "economia", "politica", "cultura", "viajes", "mundo", "vida".`
 
@@ -71,19 +58,19 @@ export async function generateTopic(
     userPrompt += `\n\nIMPORTANTE: La escritora ya completó estos temas, así que generá uno DIFERENTE:\n- ${completedTopics.join('\n- ')}`
   }
 
-  const message = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 512,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userPrompt }],
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.0-flash',
+    systemInstruction: SYSTEM_PROMPT,
+    generationConfig: {
+      responseMimeType: 'application/json',
+      maxOutputTokens: 512,
+    },
   })
 
-  const textBlock = message.content.find((block) => block.type === 'text')
-  if (!textBlock || textBlock.type !== 'text') {
-    throw new Error('No se recibió respuesta de texto del modelo.')
-  }
+  const result = await model.generateContent(userPrompt)
+  const text = result.response.text()
 
-  const parsed = JSON.parse(textBlock.text) as Topic
+  const parsed = JSON.parse(text) as Topic
 
   if (!parsed.topic || !Array.isArray(parsed.keywords) || !Array.isArray(parsed.questions) || !parsed.category) {
     throw new Error('La respuesta del modelo no tiene el formato esperado.')

@@ -38,7 +38,7 @@ The name means **"Let's talk in 10 minutes"** — the concept is simple: pick a 
 - **Server**: Express.js (in `/server` folder)
 - **Database**: Firebase Firestore
 - **Authentication**: Firebase Auth (Google provider only)
-- **AI**: Anthropic API (Claude) — for generating topics, keywords, and guiding questions
+- **AI**: Google Gemini API — for generating topics, keywords, and guiding questions
 
 ### Project Architecture
 Monorepo with `client` and `server` folders:
@@ -89,7 +89,7 @@ Monorepo with `client` and `server` folders:
 │   │   ├── /routes
 │   │   │   └── topics.ts        # POST /api/topics/generate
 │   │   ├── /services
-│   │   │   ├── anthropic.ts     # Anthropic API integration
+│   │   │   ├── gemini.ts        # Google Gemini API integration
 │   │   │   └── firebase-admin.ts # Firebase Admin SDK
 │   │   ├── /middleware
 │   │   │   └── auth.ts          # Verify Firebase ID tokens
@@ -126,10 +126,10 @@ On login, the app greets her with warm, rotating messages like:
 - Time-of-day aware: "Buenas tardes" / "Buen día"
 - Could reference her name or something personal
 
-## API Integration — Anthropic (Claude)
+## API Integration — Google Gemini
 
 ### Topic Generation Prompt Strategy
-The server calls the Anthropic API to generate topics. The system prompt must be deeply grounded in:
+The server calls the Google Gemini API to generate topics. The system prompt must be deeply grounded in:
 - **Corrientes, Argentina** — local culture, geography, traditions
 - **Her generation** — born ~1934, lived through Perón, the dictatorship, the return of democracy, hyperinflation, dollarization, etc.
 - **Her interests** — education, travel, politics, royalty, carnavales, artesanías, dance
@@ -196,7 +196,7 @@ NUXT_PUBLIC_API_BASE_URL=          # Render backend URL
 
 ### Server (`/server/.env`)
 ```
-ANTHROPIC_API_KEY=
+GEMINI_API_KEY=
 FIREBASE_SERVICE_ACCOUNT=          # JSON string or path
 PORT=3001
 ALLOWED_ORIGINS=                   # Firebase Hosting URL
