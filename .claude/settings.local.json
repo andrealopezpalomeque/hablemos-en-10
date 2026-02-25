@@ -19,7 +19,8 @@
       "Bash(cd:*)",
       "Bash(which firebase:*)",
       "Bash(head:*)",
-      "Bash(firebase deploy:*)"
+      "Bash(firebase deploy:*)",
+      "Bash(yarn generate:*)"
     ]
   }
 }
