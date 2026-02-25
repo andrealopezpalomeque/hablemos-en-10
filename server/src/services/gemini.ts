@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai'
 import { config } from '../config/environment.js'
 import type { Topic, TopicCategory } from '../types/index.js'
 
@@ -59,16 +59,29 @@ export async function generateTopic(
   }
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     systemInstruction: SYSTEM_PROMPT,
     generationConfig: {
       responseMimeType: 'application/json',
-      maxOutputTokens: 512,
+      responseSchema: {
+        type: SchemaType.OBJECT,
+        properties: {
+          topic: { type: SchemaType.STRING },
+          keywords: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+          questions: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+          category: { type: SchemaType.STRING },
+        },
+        required: ['topic', 'keywords', 'questions', 'category'],
+      },
+      maxOutputTokens: 2048,
     },
   })
 
   const result = await model.generateContent(userPrompt)
-  const text = result.response.text()
+  let text = result.response.text()
+
+  // Strip markdown code fences if the model wraps the JSON
+  text = text.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim()
 
   const parsed = JSON.parse(text) as Topic
 
