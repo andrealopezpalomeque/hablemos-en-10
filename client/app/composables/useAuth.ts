@@ -58,6 +58,7 @@ export function useAuth() {
 
     try {
       await signInWithPopup(auth, provider)
+      await navigateTo('/home')
     } catch (e: any) {
       // Popup blocked (common on iPad Safari) — fall back to redirect
       if (
