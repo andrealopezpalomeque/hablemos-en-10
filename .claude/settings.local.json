@@ -9,7 +9,10 @@
       "Bash(true:*)",
       "Bash(tail:*)",
       "Bash(echo Port 3000 cleared:*)",
-      "Bash(yarn build:*)"
+      "Bash(yarn build:*)",
+      "Bash(test:*)",
+      "Bash(yarn dev:*)",
+      "Bash(curl:*)"
     ]
   }
 }
