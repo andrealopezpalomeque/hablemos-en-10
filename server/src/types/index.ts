@@ -1,3 +1,5 @@
+import type { Request } from 'express'
+
 export interface Topic {
   topic: string
   keywords: string[]
@@ -17,4 +19,8 @@ export type TopicCategory =
 export interface GenerateTopicRequest {
   category?: TopicCategory
   completedTopics?: string[]
+}
+
+export interface AuthenticatedRequest extends Request {
+  uid: string
 }

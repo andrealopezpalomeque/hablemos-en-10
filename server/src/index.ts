@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { config } from '../config/environment.js'
+import { config } from './config/environment.js'
 import { topicsRouter } from './routes/topics.js'
 
 const app = express()
