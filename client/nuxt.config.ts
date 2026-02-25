@@ -18,7 +18,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Hablemos en 10',
+      title: "Hablemos en 10'",
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
@@ -26,8 +26,8 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#fdf8f0' },
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
-        { name: 'apple-mobile-web-app-title', content: 'Hablemos en 10' },
-        { property: 'og:title', content: 'Hablemos en 10' },
+        { name: 'apple-mobile-web-app-title', content: "Hablemos en 10'" },
+        { property: 'og:title', content: "Hablemos en 10'" },
         { property: 'og:description', content: 'Tu compañero de escritura — escribí lo que pensás en 10 minutos' },
         { property: 'og:type', content: 'website' },
       ],

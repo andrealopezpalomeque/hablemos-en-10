@@ -21,10 +21,14 @@ SUS INTERESES:
 - Educación: fue maestra, tiene mucho que decir sobre la escuela de antes y la de ahora
 - Economía: el dólar, el dinero, el trabajo, cómo cambió todo
 - Política: opiniones sobre políticos argentinos e internacionales, las leyes, el gobierno
-- Cultura: carnavales, fiestas populares, artesanías, danza
+- Tradiciones: carnavales correntinos, fiestas populares, costumbres, tradiciones religiosas
+- Arte: artesanías que ella hace, danza, música, cantantes que le gustan, películas
 - Viajes: conoció muchos países y puede comparar culturas
-- Mundo: la realeza (reinas de Inglaterra, Letizia de España), figuras internacionales que ve en la tele
-- Vida: familia, sabiduría, reflexiones personales, la vida cotidiana en Corrientes
+- Familia: su hija, sus nietos, ser madre, ser abuela, los vínculos
+- Corrientes: su ciudad, el río Paraná, la costanera, la gente, el día a día correntino
+- Tecnología: cómo cambió el mundo, el antes y el ahora, la comunicación, los aparatos
+- Naturaleza: plantas, flores, jardines, el campo, el clima, el paisaje
+- Personajes: realeza (reinas de Inglaterra, Letizia de España), figuras famosas, gente que admira o que ve en la tele
 
 INSTRUCCIONES:
 - Generá UN tema de escritura con sus palabras clave y preguntas guía
@@ -34,16 +38,20 @@ INSTRUCCIONES:
 - Las palabras clave deben ser concretas y evocadoras, entre 4 y 6
 - Generá exactamente 3 preguntas guía
 
-Las categorías válidas son: "educacion", "economia", "politica", "cultura", "viajes", "mundo", "vida".`
+Las categorías válidas son: "educacion", "economia", "politica", "tradiciones", "arte", "viajes", "familia", "corrientes", "tecnologia", "naturaleza", "personajes".`
 
 const CATEGORY_HINTS: Record<TopicCategory, string> = {
   educacion: 'Generá un tema sobre educación, la escuela, los maestros o la enseñanza.',
   economia: 'Generá un tema sobre economía, el dólar, el dinero, el trabajo o los precios.',
   politica: 'Generá un tema sobre política, políticos, leyes o el gobierno.',
-  cultura: 'Generá un tema sobre cultura: carnavales, fiestas, tradiciones, artesanías o danza.',
+  tradiciones: 'Generá un tema sobre tradiciones: carnavales correntinos, fiestas populares o costumbres.',
+  arte: 'Generá un tema sobre artesanías, danza, música, cantantes o películas.',
   viajes: 'Generá un tema sobre viajes, lugares del mundo o comparaciones entre culturas.',
-  mundo: 'Generá un tema sobre figuras internacionales, realeza o lo que se ve en las noticias.',
-  vida: 'Generá un tema sobre la vida cotidiana, la familia, la sabiduría o reflexiones personales.',
+  familia: 'Generá un tema sobre la familia: ser madre, ser abuela, los nietos, los vínculos.',
+  corrientes: 'Generá un tema sobre Corrientes: la ciudad, el río, la costanera, la gente, el día a día.',
+  tecnologia: 'Generá un tema sobre tecnología: cómo cambió el mundo, el antes y el ahora, la comunicación.',
+  naturaleza: 'Generá un tema sobre la naturaleza: plantas, flores, jardines, el campo o el clima.',
+  personajes: 'Generá un tema sobre personajes famosos: realeza, figuras públicas o gente que admira.',
 }
 
 export async function generateTopic(

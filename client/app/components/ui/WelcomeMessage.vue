@@ -4,11 +4,10 @@ const { user } = useAuth()
 const greetings = [
   'Qué lindo que estés acá',
   'Hoy es un buen día para escribir',
-  'Tu sabiduría merece ser contada',
-  'Tus palabras importan',
-  'El mundo necesita tu mirada',
-  'Cada palabra tuya es un regalo',
-  'Escribir es recordar y crear a la vez',
+  '¿Lista para escribir?',
+  'Qué bueno verte por acá',
+  'Dale, ¡a escribir!',
+  'Te estábamos esperando',
 ]
 
 const hour = new Date().getHours()

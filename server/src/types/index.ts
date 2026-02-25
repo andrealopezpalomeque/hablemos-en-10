@@ -11,10 +11,14 @@ export type TopicCategory =
   | 'educacion'
   | 'economia'
   | 'politica'
-  | 'cultura'
+  | 'tradiciones'
+  | 'arte'
   | 'viajes'
-  | 'mundo'
-  | 'vida'
+  | 'familia'
+  | 'corrientes'
+  | 'tecnologia'
+  | 'naturaleza'
+  | 'personajes'
 
 export interface GenerateTopicRequest {
   category?: TopicCategory

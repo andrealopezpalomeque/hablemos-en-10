@@ -9,20 +9,28 @@ const categoryLabels: Record<TopicCategory, string> = {
   educacion: 'Educación',
   economia: 'Economía',
   politica: 'Política',
-  cultura: 'Cultura',
+  tradiciones: 'Tradiciones',
+  arte: 'Arte',
   viajes: 'Viajes',
-  mundo: 'Mundo',
-  vida: 'Vida',
+  familia: 'Familia',
+  corrientes: 'Corrientes',
+  tecnologia: 'Tecnología',
+  naturaleza: 'Naturaleza',
+  personajes: 'Personajes',
 }
 
 const categoryColors: Record<TopicCategory, { bg: string; text: string; border: string }> = {
-  cultura:   { bg: '#fef3e2', text: '#b8621b', border: '#f4c67a' },
-  educacion: { bg: '#e8f5e9', text: '#2e7d32', border: '#a5d6a7' },
-  economia:  { bg: '#fff3e0', text: '#e65100', border: '#ffcc80' },
-  politica:  { bg: '#e3f2fd', text: '#1565c0', border: '#90caf9' },
-  viajes:    { bg: '#f3e5f5', text: '#7b1fa2', border: '#ce93d8' },
-  mundo:     { bg: '#e0f7fa', text: '#00695c', border: '#80cbc4' },
-  vida:      { bg: '#fbe9e7', text: '#bf360c', border: '#ffab91' },
+  educacion:   { bg: '#e8f5e9', text: '#2e7d32', border: '#a5d6a7' },
+  economia:    { bg: '#fff3e0', text: '#e65100', border: '#ffcc80' },
+  politica:    { bg: '#e3f2fd', text: '#1565c0', border: '#90caf9' },
+  tradiciones: { bg: '#fef3e2', text: '#b8621b', border: '#f4c67a' },
+  arte:        { bg: '#f3e5f5', text: '#7b1fa2', border: '#ce93d8' },
+  viajes:      { bg: '#e0f7fa', text: '#00695c', border: '#80cbc4' },
+  familia:     { bg: '#fbe9e7', text: '#bf360c', border: '#ffab91' },
+  corrientes:  { bg: '#e8eaf6', text: '#283593', border: '#9fa8da' },
+  tecnologia:  { bg: '#eceff1', text: '#37474f', border: '#b0bec5' },
+  naturaleza:  { bg: '#e8f5e9', text: '#1b5e20', border: '#81c784' },
+  personajes:  { bg: '#fce4ec', text: '#880e4f', border: '#f48fb1' },
 }
 </script>
 

@@ -28,10 +28,14 @@ const categoryOptions: { value: TopicCategory | undefined; label: string }[] = [
   { value: 'educacion', label: 'Educación' },
   { value: 'economia', label: 'Economía' },
   { value: 'politica', label: 'Política' },
-  { value: 'cultura', label: 'Cultura' },
+  { value: 'tradiciones', label: 'Tradiciones' },
+  { value: 'arte', label: 'Arte' },
   { value: 'viajes', label: 'Viajes' },
-  { value: 'mundo', label: 'Mundo' },
-  { value: 'vida', label: 'Vida' },
+  { value: 'familia', label: 'Familia' },
+  { value: 'corrientes', label: 'Corrientes' },
+  { value: 'tecnologia', label: 'Tecnología' },
+  { value: 'naturaleza', label: 'Naturaleza' },
+  { value: 'personajes', label: 'Personajes' },
 ]
 
 const ctaLabel = computed(() => {

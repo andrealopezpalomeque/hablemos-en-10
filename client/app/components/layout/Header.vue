@@ -13,9 +13,9 @@ const firstName = computed(() => {
       <NuxtLink
         to="/home"
         class="font-heading text-[22px] font-bold tracking-tight text-warm-800"
-        aria-label="Ir al inicio — Hablemos en 10"
+        aria-label="Ir al inicio — Hablemos en 10'"
       >
-        Hablemos en <span class="text-warm-500">10</span>
+        Hablemos en <span class="text-warm-500">10'</span>
       </NuxtLink>
 
       <nav v-if="isLoggedIn" class="flex items-center gap-4" aria-label="Navegación principal">
