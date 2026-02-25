@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { TopicCategory } from '~/types'
+
 definePageMeta({
   middleware: 'auth',
 })
@@ -6,28 +8,56 @@ definePageMeta({
 type ViewState = 'welcome' | 'loading' | 'topic' | 'writing' | 'finished' | 'saved'
 const viewState = ref<ViewState>('welcome')
 
-const { currentTopic, isLoading, error, fetchTopic, saveCompletedTopic, clearTopic } = useTopics()
+const {
+  currentTopic,
+  isLoading,
+  error,
+  completedCount,
+  fetchTopic,
+  saveCompletedTopic,
+  loadCompletedTopics,
+  clearTopic,
+} = useTopics()
+
 const timerCompleted = ref(false)
 const isSaving = ref(false)
+const selectedCategory = ref<TopicCategory | undefined>(undefined)
+
+const categoryOptions: { value: TopicCategory | undefined; label: string }[] = [
+  { value: undefined, label: 'Cualquier tema' },
+  { value: 'educacion', label: 'Educación' },
+  { value: 'economia', label: 'Economía' },
+  { value: 'politica', label: 'Política' },
+  { value: 'cultura', label: 'Cultura' },
+  { value: 'viajes', label: 'Viajes' },
+  { value: 'mundo', label: 'Mundo' },
+  { value: 'vida', label: 'Vida' },
+]
+
+const encouragementMessages = [
+  '¡Guardado! Otro tema más para tu libro.',
+  '¡Excelente! Tu libro crece con cada sesión.',
+  '¡Qué bueno! Tus ideas quedaron registradas.',
+  '¡Muy bien! Seguí sumando temas.',
+  '¡Listo! Tu sabiduría sigue quedando por escrito.',
+]
+
+const savedMessage = ref('')
+
+onMounted(() => {
+  loadCompletedTopics()
+})
 
 async function handleRequestTopic() {
   viewState.value = 'loading'
-  await fetchTopic()
-  if (currentTopic.value) {
-    viewState.value = 'topic'
-  } else {
-    viewState.value = 'welcome'
-  }
+  await fetchTopic(selectedCategory.value)
+  viewState.value = currentTopic.value ? 'topic' : 'welcome'
 }
 
 async function handleAnotherTopic() {
   viewState.value = 'loading'
-  await fetchTopic()
-  if (currentTopic.value) {
-    viewState.value = 'topic'
-  } else {
-    viewState.value = 'welcome'
-  }
+  await fetchTopic(selectedCategory.value)
+  viewState.value = currentTopic.value ? 'topic' : 'welcome'
 }
 
 function startWriting() {
@@ -45,12 +75,12 @@ async function handleSave() {
   isSaving.value = true
   try {
     await saveCompletedTopic(currentTopic.value, timerCompleted.value)
-    viewState.value = 'saved'
   } catch {
-    // Firestore save failed — still show saved state so she isn't stuck
-    viewState.value = 'saved'
+    // Still proceed so she isn't stuck
   } finally {
     isSaving.value = false
+    savedMessage.value = encouragementMessages[Math.floor(Math.random() * encouragementMessages.length)]
+    viewState.value = 'saved'
   }
 }
 
@@ -72,12 +102,32 @@ function backToStart() {
     <template v-if="viewState === 'welcome'">
       <UiWelcomeMessage />
 
+      <!-- Topic count -->
+      <p v-if="completedCount > 0" class="text-body text-warm-600">
+        Ya escribiste sobre {{ completedCount }} {{ completedCount === 1 ? 'tema' : 'temas' }}
+      </p>
+
       <!-- Show error with retry -->
       <p v-if="error" class="max-w-md text-center text-body text-red-600">
         {{ error }}
       </p>
 
-      <UiButton class="mt-4" @click="handleRequestTopic">
+      <!-- Category filter -->
+      <div class="flex flex-wrap justify-center gap-2">
+        <button
+          v-for="option in categoryOptions"
+          :key="option.label"
+          class="rounded-full border px-4 py-2 text-body font-medium transition-colors"
+          :class="selectedCategory === option.value
+            ? 'border-warm-500 bg-warm-500 text-white'
+            : 'border-warm-300 bg-white text-warm-700 hover:bg-warm-100'"
+          @click="selectedCategory = option.value"
+        >
+          {{ option.label }}
+        </button>
+      </div>
+
+      <UiButton class="mt-2" @click="handleRequestTopic">
         Dame un tema
       </UiButton>
     </template>
@@ -140,14 +190,14 @@ function backToStart() {
       </div>
     </template>
 
-    <!-- Saved confirmation -->
+    <!-- Saved confirmation with encouragement -->
     <template v-else-if="viewState === 'saved'">
       <div class="flex flex-col items-center gap-6 py-8">
         <p class="text-display font-semibold text-warm-700">
-          ¡Guardado!
+          {{ savedMessage }}
         </p>
-        <p class="max-w-md text-center text-title text-warm-600">
-          Otro tema más para tu libro. ¡Seguí así!
+        <p v-if="completedCount > 1" class="text-body text-warm-500">
+          Ya van {{ completedCount }} temas en tu libro.
         </p>
 
         <UiButton class="mt-4" @click="backToStart">

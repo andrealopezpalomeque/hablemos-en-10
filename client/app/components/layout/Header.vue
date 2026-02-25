@@ -14,6 +14,12 @@ const firstName = computed(() => {
     </NuxtLink>
 
     <div v-if="isLoggedIn" class="flex items-center gap-3">
+      <NuxtLink
+        to="/history"
+        class="text-body font-medium text-warm-600 transition-colors hover:text-warm-800"
+      >
+        Mis temas
+      </NuxtLink>
       <img
         v-if="user?.photoURL"
         :src="user.photoURL"
