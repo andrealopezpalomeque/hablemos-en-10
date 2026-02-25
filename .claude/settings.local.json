@@ -6,7 +6,10 @@
       "Bash(yarn add:*)",
       "Bash(cd /Users/andreavictorialopezpalomeque/Documents/personal-projects/hablemos-en-10/server && yarn install 2>&1)",
       "Bash(timeout 10 yarn dev:*)",
-      "Bash(true:*)"
+      "Bash(true:*)",
+      "Bash(tail:*)",
+      "Bash(echo Port 3000 cleared:*)",
+      "Bash(yarn build:*)"
     ]
   }
 }

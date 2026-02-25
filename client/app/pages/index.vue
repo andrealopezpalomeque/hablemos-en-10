@@ -3,31 +3,28 @@ import IconGoogle from '~icons/mdi/google'
 
 definePageMeta({
   middleware: 'guest',
+  layout: false,
 })
 
 const { login, error, isLoading } = useAuth()
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center py-16 text-center">
-    <h2 class="text-display font-bold text-warm-800">
-      Bienvenida
-    </h2>
-    <p class="mt-4 text-body text-warm-700">
+  <div class="flex min-h-screen flex-col items-center justify-center bg-cream px-5 text-center">
+    <h1 class="text-display font-bold text-warm-800">
+      Hablemos en 10
+    </h1>
+    <p class="mt-4 max-w-sm text-title text-warm-600">
       Tu compañera de escritura te espera.
     </p>
-    <p class="mt-2 text-body text-warm-600">
+    <p class="mt-2 max-w-sm text-body text-warm-500">
       Elegí un tema, arrancá el reloj y escribí lo que pensás.
     </p>
 
-    <button
-      class="mt-10 flex items-center gap-3 rounded-2xl bg-warm-500 px-8 py-5 text-title font-semibold text-white shadow-md transition-colors hover:bg-warm-600 active:bg-warm-700 disabled:opacity-50"
-      :disabled="isLoading"
-      @click="login"
-    >
-      <IconGoogle class="size-7" />
+    <UiButton class="mt-10" :loading="isLoading" @click="login">
+      <IconGoogle class="size-7" aria-hidden="true" />
       Entrar con Google
-    </button>
+    </UiButton>
 
     <p
       v-if="error"
@@ -35,6 +32,10 @@ const { login, error, isLoading } = useAuth()
       role="alert"
     >
       {{ error }}
+    </p>
+
+    <p class="mt-auto pb-6 text-sm text-warm-400">
+      Hecho con cariño para vos, abuela
     </p>
   </div>
 </template>

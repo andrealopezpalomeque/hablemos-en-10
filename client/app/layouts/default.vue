@@ -2,9 +2,9 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-cream text-gray-800">
+  <div class="flex min-h-screen flex-col bg-cream font-sans text-warm-900">
     <LayoutHeader />
-    <main class="mx-auto max-w-3xl px-4 py-6">
+    <main class="mx-auto w-full max-w-2xl flex-1 px-5 py-8 md:px-8 md:py-10">
       <slot />
     </main>
     <LayoutFooter />
