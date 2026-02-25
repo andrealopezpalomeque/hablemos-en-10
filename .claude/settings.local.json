@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/andreavictorialopezpalomeque/Documents/personal-projects/hablemos-en-10/client && npx nuxi@latest init . --force --packageManager yarn 2>&1)",
+      "Bash(npx nuxi@latest:*)",
+      "Bash(yarn add:*)",
+      "Bash(cd /Users/andreavictorialopezpalomeque/Documents/personal-projects/hablemos-en-10/server && yarn install 2>&1)",
+      "Bash(timeout 10 yarn dev:*)",
+      "Bash(true:*)"
+    ]
+  }
+}
