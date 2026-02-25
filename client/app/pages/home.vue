@@ -54,6 +54,11 @@ const encouragementMessages = [
 
 const savedMessage = ref('')
 
+const homeResetTrigger = useState('homeReset', () => 0)
+watch(homeResetTrigger, () => {
+  backToStart()
+})
+
 onMounted(() => {
   loadCompletedTopics()
 })
@@ -193,6 +198,12 @@ function backToStart() {
             Empezar a escribir
           </UiButton>
         </div>
+        <button
+          class="text-base font-medium text-warm-500 transition-colors hover:text-warm-700"
+          @click="backToStart"
+        >
+          ← Elegir otra categoría
+        </button>
       </div>
 
       <!-- Writing state with timer + full topic -->

@@ -1,10 +1,19 @@
 <script setup lang="ts">
 const { user, isLoggedIn, logout } = useAuth()
+const route = useRoute()
+const homeResetTrigger = useState('homeReset', () => 0)
 
 const firstName = computed(() => {
   const name = user.value?.displayName ?? ''
   return name.split(' ')[0] || ''
 })
+
+function handleLogoClick(e: Event) {
+  if (route.path === '/home') {
+    e.preventDefault()
+    homeResetTrigger.value++
+  }
+}
 </script>
 
 <template>
@@ -14,6 +23,7 @@ const firstName = computed(() => {
         to="/home"
         class="font-heading text-[22px] font-bold tracking-tight text-warm-800"
         aria-label="Ir al inicio — Hablemos en 10'"
+        @click="handleLogoClick"
       >
         Hablemos en <span class="text-warm-500">10'</span>
       </NuxtLink>
