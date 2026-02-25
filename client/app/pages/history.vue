@@ -43,7 +43,7 @@ onMounted(() => {
     <!-- Loading -->
     <div v-if="isLoadingHistory" class="flex flex-col items-center gap-4 py-8">
       <div class="size-12 animate-spin rounded-full border-4 border-warm-200 border-t-warm-500" />
-      <p class="text-body text-warm-500">Cargando tus temas...</p>
+      <p class="text-body text-warm-700">Cargando tus temas...</p>
     </div>
 
     <!-- Empty state -->
@@ -51,10 +51,10 @@ onMounted(() => {
       v-else-if="completedCount === 0"
       class="mt-4 w-full max-w-lg rounded-3xl border border-warm-200 bg-white p-8 text-center"
     >
-      <p class="text-title text-warm-600">
+      <p class="text-title text-warm-700">
         Todavía no exploraste ningún tema.
       </p>
-      <p class="mt-2 text-body text-warm-500">
+      <p class="mt-2 text-body text-warm-700">
         Cuando completes tu primera sesión de escritura, vas a verla acá.
       </p>
       <UiButton class="mt-6" variant="secondary" @click="navigateTo('/home')">
@@ -78,14 +78,14 @@ onMounted(() => {
               <span class="rounded-full bg-warm-100 px-3 py-0.5 text-sm font-medium text-warm-700">
                 {{ categoryLabels[topic.category] }}
               </span>
-              <span class="text-sm text-warm-500">
+              <span class="text-sm text-warm-700">
                 {{ formatDate(topic.completedAt) }}
               </span>
             </div>
           </div>
           <span
             v-if="topic.timerCompleted"
-            class="shrink-0 text-sm text-warm-500"
+            class="shrink-0 text-sm text-warm-700"
             aria-label="Completó los 10 minutos"
             title="Completó los 10 minutos"
           >

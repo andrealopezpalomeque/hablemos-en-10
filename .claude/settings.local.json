@@ -12,7 +12,10 @@
       "Bash(yarn build:*)",
       "Bash(test:*)",
       "Bash(yarn dev:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(cat:*)",
+      "Bash(cd /Users/andreavictorialopezpalomeque/Documents/personal-projects/hablemos-en-10/client/public && sips -s format png apple-touch-icon.svg --out apple-touch-icon.png 2>&1 || echo \"sips failed, trying convert\" && convert apple-touch-icon.svg -resize 180x180 apple-touch-icon.png 2>&1)",
+      "Bash(python3:*)"
     ]
   }
 }

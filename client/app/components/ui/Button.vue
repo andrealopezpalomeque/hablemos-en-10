@@ -26,7 +26,7 @@ const classes = computed(() => {
   }
 
   const variants: Record<string, string> = {
-    primary: 'bg-warm-500 text-white shadow-md hover:bg-warm-600 active:bg-warm-700',
+    primary: 'bg-warm-700 text-white shadow-md hover:bg-warm-800 active:bg-warm-900',
     secondary: 'bg-warm-200 text-warm-800 hover:bg-warm-300 active:bg-warm-400',
     ghost: 'text-warm-700 hover:bg-warm-100 active:bg-warm-200',
   }

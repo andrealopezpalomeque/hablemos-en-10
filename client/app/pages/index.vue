@@ -14,10 +14,10 @@ const { login, error, isLoading } = useAuth()
     <h1 class="text-display font-bold text-warm-800">
       Hablemos en 10
     </h1>
-    <p class="mt-4 max-w-sm text-title text-warm-600">
+    <p class="mt-4 max-w-sm text-title text-warm-700">
       Tu compañera de escritura te espera.
     </p>
-    <p class="mt-2 max-w-sm text-body text-warm-500">
+    <p class="mt-2 max-w-sm text-body text-warm-700">
       Elegí un tema, arrancá el reloj y escribí lo que pensás.
     </p>
 
@@ -34,7 +34,7 @@ const { login, error, isLoading } = useAuth()
       {{ error }}
     </p>
 
-    <p class="mt-auto pb-6 text-sm text-warm-400">
+    <p class="mt-auto pb-6 text-sm text-warm-700">
       Hecho con cariño para vos, abuela
     </p>
   </div>

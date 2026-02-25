@@ -50,7 +50,7 @@ onMounted(() => {
     </div>
 
     <!-- Finished message -->
-    <p v-if="isFinished" class="text-title font-semibold text-warm-700">
+    <p v-if="isFinished" class="text-title font-semibold text-warm-800">
       ¡Muy bien! ¿Terminaste?
     </p>
 
