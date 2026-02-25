@@ -24,7 +24,7 @@ const isSaving = ref(false)
 const selectedCategory = ref<TopicCategory | undefined>(undefined)
 
 const categoryOptions: { value: TopicCategory | undefined; label: string }[] = [
-  { value: undefined, label: 'Cualquier tema' },
+  { value: undefined, label: 'Cualquier tópico' },
   { value: 'educacion', label: 'Educación' },
   { value: 'economia', label: 'Economía' },
   { value: 'politica', label: 'Política' },
@@ -33,6 +33,12 @@ const categoryOptions: { value: TopicCategory | undefined; label: string }[] = [
   { value: 'mundo', label: 'Mundo' },
   { value: 'vida', label: 'Vida' },
 ]
+
+const ctaLabel = computed(() => {
+  if (!selectedCategory.value) return 'Dame un tema'
+  const selected = categoryOptions.find((o) => o.value === selectedCategory.value)
+  return `Dame un tema de ${selected?.label}`
+})
 
 const encouragementMessages = [
   '¡Guardado! Otro tema más para tu libro.',
@@ -108,8 +114,8 @@ function backToStart() {
         <UiWelcomeMessage />
 
         <!-- Topic count -->
-        <p v-if="completedCount > 0" class="text-body text-warm-700">
-          Ya escribiste sobre {{ completedCount }} {{ completedCount === 1 ? 'tema' : 'temas' }}
+        <p v-if="completedCount > 0" class="text-base text-warm-700">
+          Ya escribiste sobre <strong class="font-bold text-warm-500">{{ completedCount }} {{ completedCount === 1 ? 'tema' : 'temas' }}</strong>
         </p>
 
         <!-- Show error with retry -->
@@ -118,42 +124,52 @@ function backToStart() {
         </p>
 
         <!-- Category filter -->
-        <div class="flex flex-wrap justify-center gap-2" role="radiogroup" aria-label="Categoría del tema">
+        <div class="flex flex-wrap justify-center gap-2.5" role="radiogroup" aria-label="Categoría del tema">
           <button
             v-for="option in categoryOptions"
             :key="option.label"
             role="radio"
             :aria-checked="selectedCategory === option.value"
-            class="rounded-full border px-4 py-2 text-body font-medium transition-colors"
+            class="rounded-full border px-5 py-2.5 text-base font-semibold transition-all duration-200"
             :class="selectedCategory === option.value
-              ? 'border-warm-700 bg-warm-700 text-white'
-              : 'border-warm-300 bg-white text-warm-700 hover:bg-warm-100'"
+              ? 'border-warm-500 bg-warm-500 text-white shadow-md shadow-warm-500/20'
+              : 'border-warm-300 bg-white text-warm-700 hover:border-warm-500 hover:text-warm-500'"
             @click="selectedCategory = option.value"
           >
             {{ option.label }}
           </button>
         </div>
 
-        <UiButton class="mt-2" @click="handleRequestTopic">
-          Dame un tema
+        <UiButton class="mt-4" @click="handleRequestTopic">
+          {{ ctaLabel }}
         </UiButton>
       </div>
 
       <!-- Loading skeleton -->
       <div v-else-if="viewState === 'loading'" key="loading" class="flex w-full flex-col items-center gap-6 py-8">
-        <div class="w-full max-w-lg animate-pulse rounded-3xl border border-warm-200 bg-white p-6 md:p-8" aria-busy="true" aria-label="Generando tema...">
-          <div class="h-5 w-24 rounded-full bg-warm-100" />
-          <div class="mt-4 h-8 w-3/4 rounded-lg bg-warm-100" />
-          <div class="mt-5 flex gap-2">
-            <div class="h-8 w-20 rounded-full bg-warm-50" />
-            <div class="h-8 w-24 rounded-full bg-warm-50" />
-            <div class="h-8 w-16 rounded-full bg-warm-50" />
-            <div class="h-8 w-20 rounded-full bg-warm-50" />
+        <div class="w-full max-w-lg animate-pulse rounded-3xl border border-warm-200 bg-white p-7 md:p-9" aria-busy="true" aria-label="Generando tema...">
+          <div class="h-6 w-24 rounded-full bg-warm-100" />
+          <div class="mt-5 h-8 w-3/4 rounded-lg bg-warm-100" />
+          <div class="mt-5 h-[3px] w-12 rounded-full bg-warm-100" />
+          <div class="mt-5 flex gap-2.5">
+            <div class="h-10 w-20 rounded-full bg-warm-50" />
+            <div class="h-10 w-24 rounded-full bg-warm-50" />
+            <div class="h-10 w-16 rounded-full bg-warm-50" />
+            <div class="h-10 w-20 rounded-full bg-warm-50" />
           </div>
-          <div class="mt-6 space-y-3">
-            <div class="h-5 w-full rounded bg-warm-50" />
-            <div class="h-5 w-5/6 rounded bg-warm-50" />
-            <div class="h-5 w-4/6 rounded bg-warm-50" />
+          <div class="mt-7 space-y-4">
+            <div class="flex gap-3.5">
+              <div class="size-7 shrink-0 rounded-full bg-warm-100" />
+              <div class="h-5 flex-1 rounded bg-warm-50" />
+            </div>
+            <div class="flex gap-3.5">
+              <div class="size-7 shrink-0 rounded-full bg-warm-100" />
+              <div class="h-5 w-5/6 rounded bg-warm-50" />
+            </div>
+            <div class="flex gap-3.5">
+              <div class="size-7 shrink-0 rounded-full bg-warm-100" />
+              <div class="h-5 w-4/6 rounded bg-warm-50" />
+            </div>
           </div>
         </div>
         <p class="text-title text-warm-700">
@@ -166,7 +182,7 @@ function backToStart() {
         <UiTopicCard v-if="currentTopic" :topic="currentTopic" />
 
         <div class="flex gap-4">
-          <UiButton variant="secondary" :loading="isLoading" @click="handleAnotherTopic">
+          <UiButton variant="ghost" :loading="isLoading" @click="handleAnotherTopic">
             Otro tema
           </UiButton>
           <UiButton @click="startWriting">
@@ -176,49 +192,59 @@ function backToStart() {
       </div>
 
       <!-- Writing state with timer -->
-      <div v-else-if="viewState === 'writing'" key="writing" class="flex flex-col items-center gap-8">
-        <h2 v-if="currentTopic" class="text-title font-semibold text-warm-800">
-          {{ currentTopic.topic }}
-        </h2>
+      <div v-else-if="viewState === 'writing'" key="writing" class="flex flex-col items-center gap-6">
+        <UiTimer auto-start :topic-name="currentTopic?.topic" @finish="handleTimerFinish" />
 
-        <UiTimer auto-start @finish="handleTimerFinish" />
-
-        <UiButton variant="ghost" size="small" @click="handleFinishEarly">
+        <UiButton variant="secondary" size="small" @click="handleFinishEarly">
           Ya terminé
         </UiButton>
       </div>
 
       <!-- Finished state — save prompt -->
-      <div v-else-if="viewState === 'finished'" key="finished" class="flex flex-col items-center gap-6">
-        <p class="text-display font-semibold text-warm-700">
-          {{ timerCompleted ? '¡Muy bien!' : '¡Bien hecho!' }}
+      <div v-else-if="viewState === 'finished'" key="finished" class="flex flex-col items-center gap-6 py-8">
+        <p class="text-6xl">
+          ✍️
         </p>
-        <p class="max-w-md text-center text-title text-warm-700">
-          {{ timerCompleted ? '¿Terminaste de escribir? Guardemos este tema.' : '¿Querés guardar este tema?' }}
+        <p class="font-heading text-display font-bold text-warm-900">
+          {{ timerCompleted ? '¡Tiempo cumplido!' : '¡Bien hecho!' }}
+        </p>
+        <p class="max-w-md text-center text-body text-warm-700">
+          {{ timerCompleted ? 'Muy bien, ¿terminaste? Podés seguir escribiendo si querés, o guardar este tema.' : '¿Querés guardar este tema?' }}
         </p>
 
         <div class="flex gap-4">
-          <UiButton variant="secondary" @click="backToStart">
+          <UiButton variant="ghost" @click="backToStart">
             No guardar
           </UiButton>
           <UiButton :loading="isSaving" @click="handleSave">
-            Guardar
+            Guardar tema
           </UiButton>
         </div>
       </div>
 
       <!-- Saved confirmation with encouragement -->
       <div v-else-if="viewState === 'saved'" key="saved" class="flex flex-col items-center gap-6 py-8">
-        <p class="text-display font-semibold text-warm-700">
+        <div class="flex size-[72px] items-center justify-center rounded-full bg-green-50 text-4xl text-green-600">
+          ✓
+        </div>
+        <p class="font-heading text-display font-bold text-warm-900">
+          ¡Tema guardado!
+        </p>
+        <p class="max-w-sm text-center text-body text-warm-700">
           {{ savedMessage }}
         </p>
-        <p v-if="completedCount > 1" class="text-body text-warm-700">
-          Ya van {{ completedCount }} temas en tu libro.
+        <p v-if="completedCount > 1" class="text-base text-warm-700">
+          Ya van <strong class="font-bold text-warm-500">{{ completedCount }} temas</strong> en tu libro.
         </p>
 
-        <UiButton class="mt-4" @click="backToStart">
-          Seguir escribiendo
-        </UiButton>
+        <div class="mt-4 flex flex-col gap-3 text-center">
+          <UiButton @click="handleRequestTopic">
+            Escribir otro tema
+          </UiButton>
+          <UiButton variant="ghost" @click="backToStart">
+            Volver al inicio
+          </UiButton>
+        </div>
       </div>
     </Transition>
   </div>

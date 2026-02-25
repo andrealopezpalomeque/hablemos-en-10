@@ -1,15 +1,23 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   autoStart?: boolean
+  topicName?: string
 }>(), {
   autoStart: false,
+  topicName: '',
 })
 
 const emit = defineEmits<{
   finish: []
 }>()
 
-const { display, isRunning, isFinished, progress, start, stop, reset } = useTimer(10)
+const { display, secondsRemaining, isRunning, isFinished, progress, start, stop, reset } = useTimer(10)
+
+const encouragement = computed(() => {
+  if (secondsRemaining.value > 300) return 'Tomá tu tiempo, no hay apuro...'
+  if (secondsRemaining.value > 60) return 'Vas muy bien, seguí escribiendo...'
+  return 'Ya casi terminamos, últimas palabras...'
+})
 
 // Watch for timer completion to notify parent
 watch(isFinished, (finished) => {
@@ -24,33 +32,44 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col items-center gap-6">
+    <!-- What you're writing about -->
+    <div v-if="topicName" class="text-center">
+      <p class="text-body font-medium text-warm-700">Estás escribiendo sobre</p>
+      <p class="mt-1 font-heading text-title font-bold text-warm-800">{{ topicName }}</p>
+    </div>
+
     <!-- Timer display -->
     <div
-      class="flex size-52 items-center justify-center rounded-full border-4 transition-colors"
-      :class="[
-        isFinished ? 'border-warm-400 bg-warm-100' : isRunning ? 'border-warm-500 bg-warm-50' : 'border-warm-300 bg-white',
-      ]"
       role="timer"
       :aria-label="`Tiempo restante: ${display}`"
+      class="my-2"
     >
       <span
-        class="font-bold tabular-nums text-warm-800"
-        :class="isFinished ? 'text-display' : 'text-timer'"
+        class="font-heading font-black tabular-nums tracking-wider"
+        :class="[
+          isFinished ? 'text-display text-warm-500' : 'text-timer text-warm-900',
+          !isFinished && secondsRemaining <= 60 ? 'text-warm-500' : '',
+        ]"
       >
         {{ isFinished ? '00:00' : display }}
       </span>
     </div>
 
     <!-- Progress bar -->
-    <div class="h-2 w-full max-w-xs overflow-hidden rounded-full bg-warm-200" role="progressbar" :aria-valuenow="Math.round(progress * 100)" aria-valuemin="0" aria-valuemax="100">
+    <div class="h-2 w-full max-w-sm overflow-hidden rounded-full bg-warm-200" role="progressbar" :aria-valuenow="Math.round(progress * 100)" aria-valuemin="0" aria-valuemax="100">
       <div
-        class="h-full rounded-full bg-warm-500 transition-all duration-1000 ease-linear"
+        class="h-full rounded-full bg-gradient-to-r from-warm-500 to-warm-400 transition-all duration-1000 ease-linear"
         :style="{ width: `${progress * 100}%` }"
       />
     </div>
 
+    <!-- Encouragement message while writing -->
+    <p v-if="isRunning || (!isFinished && progress > 0)" class="max-w-xs text-center text-body italic text-warm-700">
+      {{ encouragement }}
+    </p>
+
     <!-- Finished message -->
-    <p v-if="isFinished" class="text-title font-semibold text-warm-800">
+    <p v-if="isFinished" class="font-heading text-title font-semibold text-warm-800">
       ¡Muy bien! ¿Terminaste?
     </p>
 
@@ -66,7 +85,7 @@ onMounted(() => {
 
       <UiButton
         v-if="isRunning"
-        variant="secondary"
+        variant="ghost"
         @click="stop"
       >
         Pausar
@@ -74,7 +93,7 @@ onMounted(() => {
 
       <UiButton
         v-if="!isRunning && !isFinished && progress > 0"
-        variant="primary"
+        variant="ghost"
         @click="start"
       >
         Continuar

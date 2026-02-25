@@ -8,6 +8,15 @@
   }
 }
 
+@layer utilities {
+  .pt-safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pb-safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
 /* Vue transition: gentle fade + slide up */
 .fade-slide-enter-active {
   @apply transition-all duration-500 ease-out;

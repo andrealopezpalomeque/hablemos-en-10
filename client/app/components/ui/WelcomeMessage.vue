@@ -24,10 +24,10 @@ const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)]
 
 <template>
   <div class="text-center">
-    <p class="text-title text-warm-700">
+    <p class="text-body font-medium uppercase tracking-wider text-warm-700">
       {{ timeGreeting }}<span v-if="firstName">, {{ firstName }}</span>
     </p>
-    <h2 class="mt-2 text-display font-bold text-warm-800">
+    <h2 class="mt-3 font-heading text-display font-bold text-warm-900">
       {{ randomGreeting }}
     </h2>
   </div>
