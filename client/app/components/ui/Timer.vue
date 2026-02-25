@@ -1,10 +1,8 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   autoStart?: boolean
-  topicName?: string
 }>(), {
   autoStart: false,
-  topicName: '',
 })
 
 const emit = defineEmits<{
@@ -31,13 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-6">
-    <!-- What you're writing about -->
-    <div v-if="topicName" class="text-center">
-      <p class="text-body font-medium text-warm-700">Estás escribiendo sobre</p>
-      <p class="mt-1 font-heading text-title font-bold text-warm-800">{{ topicName }}</p>
-    </div>
-
+  <div class="flex flex-col items-center gap-4">
     <!-- Timer display -->
     <div
       role="timer"

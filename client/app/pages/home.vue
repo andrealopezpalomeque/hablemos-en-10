@@ -191,9 +191,11 @@ function backToStart() {
         </div>
       </div>
 
-      <!-- Writing state with timer -->
-      <div v-else-if="viewState === 'writing'" key="writing" class="flex flex-col items-center gap-6">
-        <UiTimer auto-start :topic-name="currentTopic?.topic" @finish="handleTimerFinish" />
+      <!-- Writing state with timer + full topic -->
+      <div v-else-if="viewState === 'writing'" key="writing" class="flex w-full flex-col items-center gap-6">
+        <UiTimer auto-start @finish="handleTimerFinish" />
+
+        <UiTopicCard v-if="currentTopic" :topic="currentTopic" />
 
         <UiButton variant="secondary" size="small" @click="handleFinishEarly">
           Ya terminé
